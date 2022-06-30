@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9e91744c-11f0-4f4f-9e7d-584d14369da5" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<sap:sap-config name="SAP_Config" doc:name="SAP Config" doc:id="37a0a216-44d8-4a99-ae51-630d5ee1a7a1" >
+		<sap:simple-connection-provider-connection username="SAPCONNECT" password="test" systemNumber="00" client="800"/>
+	</sap:sap-config>
+	<flow name="jws-sap-rpc-testFlow" doc:id="e7f385dc-c6d7-4cca-85bd-291d214c88d2" >
+		<http:listener doc:name="Listener" doc:id="97856458-be1a-4ea4-94b8-821f763e86a6" config-ref="HTTP_Listener_config" path="/rpctest"/>
+		<sap:sync-rfc doc:name="Synchronous Remote Function Call" doc:id="3ed1b230-24ba-40d7-ac1f-42a7e9eb6f7d" config-ref="SAP_Config" key="test"/>
+	</flow>
+</mule>
